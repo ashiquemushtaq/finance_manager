@@ -1,0 +1,8 @@
+<h1>Your Transactions</h1>
+<ul>
+    {% for transaction in transactions %}
+        <li>{{ transaction.title }} - {{ transaction.amount }} - {{ transaction.category }}</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'add_transaction' %}">Add Transaction</a>
+<a href="{% url 'visualize_expense' %}">Visualize Expenses</a> 
