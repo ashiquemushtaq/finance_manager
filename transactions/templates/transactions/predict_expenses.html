@@ -1,0 +1,13 @@
+<h1>Predicted Future Expenses</h1>
+{% if predictions %}
+    <ul>
+    {% for prediction in predictions %}
+        <li>
+            {{ prediction.year }}-{{ prediction.month }}: 
+            Predicted amount: {{ prediction.predicted_amount|floatformat:2 }}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No predictions available.</p>
+{% endif %}

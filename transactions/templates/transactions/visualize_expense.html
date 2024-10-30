@@ -1,0 +1,55 @@
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Trends</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Expense Trends</h1>
+
+    <div>
+        <h2>Monthly Expenses</h2>
+        <ul>
+            {% for month, amount in expense_data.items %}
+                <li>{{ month }}: {{ amount }}</li>
+            {% empty %}
+                <li>No expense data available.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <canvas id="expenseChart" width="400" height="200"></canvas>
+
+    <script>
+        const ctx = document.getElementById('expenseChart').getContext('2d');
+        const expenseData = {{ expense_data|tojson }}; // Now using the custom filter
+
+        const labels = Object.keys(expenseData);
+        const amounts = Object.values(expenseData);
+
+        const expenseChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Expenses',
+                    data: amounts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
